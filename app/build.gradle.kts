@@ -64,15 +64,8 @@ dependencies {
     kapt(libs.dagger.compiler)
 
     // Firebase
-    implementation(platform(libs.firebase.bom))
-    implementation(libs.google.firebase.auth)
-
-    // AndroidX Credentials API
-    implementation(libs.androidx.credentials.v120)
-    implementation(libs.androidx.credentials.play.services.auth.v120)
-
-    // Google Identity Library
-    implementation(libs.googleid)
+    implementation(platform("com.google.firebase:firebase-bom:31.0.3"))
+    implementation("com.google.firebase:firebase-auth")
 
     // Room Database
     implementation(libs.androidx.room.runtime)

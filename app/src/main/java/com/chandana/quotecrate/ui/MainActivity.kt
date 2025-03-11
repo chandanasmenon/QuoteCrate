@@ -1,4 +1,4 @@
-package com.chandana.quotecrate
+package com.chandana.quotecrate.ui
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
