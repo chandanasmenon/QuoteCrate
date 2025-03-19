@@ -5,7 +5,10 @@ import com.chandana.quotecrate.QuoteCrateApplication
 import com.chandana.quotecrate.data.api.NetworkService
 import com.chandana.quotecrate.di.ApplicationContext
 import com.chandana.quotecrate.di.BaseUrl
+import com.chandana.quotecrate.utils.DefaultDispatcherProvider
+import com.chandana.quotecrate.utils.DispatcherProvider
 import com.chandana.quotecrate.utils.HeaderInterceptor
+import com.google.firebase.auth.FirebaseAuth
 import dagger.Module
 import dagger.Provides
 import okhttp3.OkHttpClient
@@ -41,6 +44,16 @@ class ApplicationModule(private val application: QuoteCrateApplication) {
             .addInterceptor(headerInterceptor)
             .build()
     }
+
+    @Provides
+    @Singleton
+    fun provideFirebaseAuth(): FirebaseAuth {
+        return FirebaseAuth.getInstance()
+    }
+
+    @Provides
+    @Singleton
+    fun provideDispatcherProvider(): DispatcherProvider = DefaultDispatcherProvider()
 
     @Provides
     @Singleton

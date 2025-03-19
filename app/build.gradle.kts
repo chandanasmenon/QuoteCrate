@@ -67,10 +67,9 @@ dependencies {
     implementation(platform("com.google.firebase:firebase-bom:31.0.3"))
     implementation("com.google.firebase:firebase-auth")
 
-    // Room Database
-    implementation(libs.androidx.room.runtime)
-    implementation(libs.androidx.room.ktx)
-    kapt(libs.androidx.room.compiler)
+    implementation("com.google.android.libraries.identity.googleid:googleid:1.1.0")
+    implementation("androidx.credentials:credentials:1.2.0")
+    implementation("androidx.credentials:credentials-play-services-auth:1.2.0")
 
     // Unit Testing
     testImplementation(libs.junit)
