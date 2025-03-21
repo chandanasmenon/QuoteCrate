@@ -18,8 +18,8 @@ import com.chandana.quotecrate.R
 import com.chandana.quotecrate.databinding.ActivityLoginBinding
 import com.chandana.quotecrate.di.component.DaggerActivityComponent
 import com.chandana.quotecrate.di.module.ActivityModule
-import com.chandana.quotecrate.ui.MainActivity
 import com.chandana.quotecrate.ui.base.UiState
+import com.chandana.quotecrate.ui.quoteDisplay.QuoteActivity
 import com.chandana.quotecrate.ui.signup.SignUpActivity
 import com.chandana.quotecrate.utils.extensions.displayMessage
 import com.chandana.quotecrate.utils.extensions.setPasswordVisibility
@@ -41,7 +41,7 @@ class LoginActivity : AppCompatActivity() {
         val currentUser = auth.currentUser
         if (currentUser != null) {
             if (currentUser.isEmailVerified) {
-                navigateToMainActivity()
+                navigateToHomeScreen()
             } else {
                 auth.signOut()
             }
@@ -146,7 +146,7 @@ class LoginActivity : AppCompatActivity() {
                             val editor = sharedPref.edit()
                             editor.putString(getString(R.string.email), it.data.email)
                             editor.apply()
-                            navigateToMainActivity()
+                            navigateToHomeScreen()
                         }
                     }
                 }
@@ -181,7 +181,7 @@ class LoginActivity : AppCompatActivity() {
                             val editor = sharedPref.edit()
                             editor.putString(getString(R.string.email), it.data.email)
                             editor.apply()
-                            navigateToMainActivity()
+                            navigateToHomeScreen()
                         }
                     }
 
@@ -191,8 +191,8 @@ class LoginActivity : AppCompatActivity() {
         }
     }
 
-    private fun navigateToMainActivity() {
-        val intent = Intent(this, MainActivity::class.java)
+    private fun navigateToHomeScreen() {
+        val intent = Intent(this, QuoteActivity::class.java)
         intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
         startActivity(intent)
         finish()

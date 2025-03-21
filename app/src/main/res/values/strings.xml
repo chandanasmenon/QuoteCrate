@@ -31,4 +31,13 @@
     <string name="signup_fields_not_valid_message">Please fill in all required fields correctly before proceeding.</string>
     <string name="user_signed_out_successfully">User signed out successfully!</string>
     <string name="email_verification_message">" Verification email sent to %1$s! Please check your inbox to verify and login here!"</string>
+    <string name="dummy_quote">Its not what you look at that matters, it\'s what you see.</string>
+    <string name="dummy_author">- Henry David Thoreau</string>
+    <string name="get_random_quote_text">Get Random Quote</string>
+    <string name="share_quote_text">Share</string>
+    <string name="please_select_the_app_text">"Please select the app: "</string>
+    <string name="hi_user">Hi, User</string>
+    <string name="logout">Logout</string>
+    <string name="logout_message">Are you sure you want to logout?</string>
+    <string name="cancel">Cancel</string>
 </resources>
