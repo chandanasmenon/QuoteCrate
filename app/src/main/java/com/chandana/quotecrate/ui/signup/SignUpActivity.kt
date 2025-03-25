@@ -7,31 +7,29 @@ import android.text.TextWatcher
 import android.util.Patterns
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
-import com.chandana.quotecrate.QuoteCrateApplication
 import com.chandana.quotecrate.R
 import com.chandana.quotecrate.databinding.ActivitySignUpBinding
-import com.chandana.quotecrate.di.component.DaggerActivityComponent
-import com.chandana.quotecrate.di.module.ActivityModule
 import com.chandana.quotecrate.ui.base.UiState
 import com.chandana.quotecrate.ui.login.LoginActivity
 import com.chandana.quotecrate.utils.extensions.displayMessage
 import com.chandana.quotecrate.utils.extensions.setPasswordVisibility
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
-import javax.inject.Inject
 
+@AndroidEntryPoint
 class SignUpActivity : AppCompatActivity() {
-    @Inject
-    lateinit var viewModel: SignupViewModel
+    private lateinit var viewModel: SignupViewModel
     private lateinit var binding: ActivitySignUpBinding
     private var passwordVisibility = true
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivitySignUpBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        injectDependencies()
+        viewModel = ViewModelProvider(this)[SignupViewModel::class.java]
         addTextWatchers()
         binding.LoginTV.setOnClickListener {
             startActivity(Intent(this, LoginActivity::class.java))
@@ -114,9 +112,4 @@ class SignUpActivity : AppCompatActivity() {
         finish()
     }
 
-    private fun injectDependencies() {
-        DaggerActivityComponent.builder()
-            .applicationComponent((application as QuoteCrateApplication).applicationComponent)
-            .activityModule(ActivityModule(this)).build().inject(this)
-    }
 }

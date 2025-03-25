@@ -11,13 +11,11 @@ import androidx.credentials.CredentialOption
 import androidx.credentials.GetCredentialRequest
 import androidx.credentials.exceptions.GetCredentialCancellationException
 import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
-import com.chandana.quotecrate.QuoteCrateApplication
 import com.chandana.quotecrate.R
 import com.chandana.quotecrate.databinding.ActivityLoginBinding
-import com.chandana.quotecrate.di.component.DaggerActivityComponent
-import com.chandana.quotecrate.di.module.ActivityModule
 import com.chandana.quotecrate.ui.base.UiState
 import com.chandana.quotecrate.ui.quoteDisplay.QuoteActivity
 import com.chandana.quotecrate.ui.signup.SignUpActivity
@@ -25,14 +23,14 @@ import com.chandana.quotecrate.utils.extensions.displayMessage
 import com.chandana.quotecrate.utils.extensions.setPasswordVisibility
 import com.google.android.libraries.identity.googleid.GetSignInWithGoogleOption
 import com.google.firebase.auth.FirebaseAuth
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
-import javax.inject.Inject
 
+@AndroidEntryPoint
 class LoginActivity : AppCompatActivity() {
 
-    @Inject
-    lateinit var viewModel: SignInViewModel
+    private lateinit var viewModel: SignInViewModel
     private lateinit var binding: ActivityLoginBinding
     private lateinit var auth: FirebaseAuth
     private var passwordVisibility = true
@@ -52,8 +50,8 @@ class LoginActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityLoginBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        injectDependencies()
         auth = FirebaseAuth.getInstance()
+        viewModel = ViewModelProvider(this)[SignInViewModel::class.java]
         addTextWatchers()
         binding.signInButton.setOnClickListener {
             signInWithEmailAndPassword()
@@ -198,9 +196,4 @@ class LoginActivity : AppCompatActivity() {
         finish()
     }
 
-    private fun injectDependencies() {
-        DaggerActivityComponent.builder()
-            .applicationComponent((application as QuoteCrateApplication).applicationComponent)
-            .activityModule(ActivityModule(this)).build().inject(this)
-    }
 }

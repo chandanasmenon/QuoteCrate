@@ -1,33 +1,33 @@
 package com.chandana.quotecrate.di.module
 
-import android.content.Context
-import com.chandana.quotecrate.QuoteCrateApplication
 import com.chandana.quotecrate.data.api.NetworkService
-import com.chandana.quotecrate.di.ApplicationContext
 import com.chandana.quotecrate.di.BaseUrl
+import com.chandana.quotecrate.di.NetworkApiKey
+import com.chandana.quotecrate.utils.AppConstant
 import com.chandana.quotecrate.utils.DefaultDispatcherProvider
 import com.chandana.quotecrate.utils.DispatcherProvider
 import com.chandana.quotecrate.utils.HeaderInterceptor
 import com.google.firebase.auth.FirebaseAuth
 import dagger.Module
 import dagger.Provides
+import dagger.hilt.InstallIn
+import dagger.hilt.components.SingletonComponent
 import okhttp3.OkHttpClient
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import javax.inject.Singleton
 
 @Module
-class ApplicationModule(private val application: QuoteCrateApplication) {
-
-    @ApplicationContext
-    @Provides
-    fun provideContext(): Context {
-        return application
-    }
+@InstallIn(SingletonComponent::class)
+class ApplicationModule {
 
     @BaseUrl
     @Provides
     fun provideBaseUrl(): String = "https://api.api-ninjas.com/v1/"
+
+    @Provides
+    @NetworkApiKey
+    fun provideApiKey(): String = AppConstant.API_KEY
 
     @Provides
     @Singleton
@@ -35,7 +35,9 @@ class ApplicationModule(private val application: QuoteCrateApplication) {
 
     @Provides
     @Singleton
-    fun provideHeaderInterceptor(): HeaderInterceptor = HeaderInterceptor()
+    fun provideHeaderInterceptor(
+        @NetworkApiKey apiKey: String
+    ): HeaderInterceptor = HeaderInterceptor(apiKey)
 
     @Provides
     @Singleton

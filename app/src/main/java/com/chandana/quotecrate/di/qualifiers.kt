@@ -8,8 +8,8 @@ annotation class ApplicationContext
 
 @Qualifier
 @Retention(AnnotationRetention.BINARY)
-annotation class ActivityContext
+annotation class BaseUrl
 
 @Qualifier
 @Retention(AnnotationRetention.BINARY)
-annotation class BaseUrl
+annotation class NetworkApiKey

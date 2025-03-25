@@ -3,6 +3,7 @@ plugins {
     alias(libs.plugins.jetbrains.kotlin.android)
     id("kotlin-kapt")
     id("com.google.gms.google-services")
+    id("com.google.dagger.hilt.android")
 }
 
 android {
@@ -59,9 +60,9 @@ dependencies {
     implementation(libs.androidx.lifecycle.viewmodel.ktx)
     implementation(libs.androidx.lifecycle.runtime.ktx)
 
-    // Dependency Injection
-    implementation(libs.dagger)
-    kapt(libs.dagger.compiler)
+    //Dagger-hilt
+    implementation(libs.hilt.android)
+    kapt(libs.hilt.compiler)
 
     // Firebase
     implementation(platform("com.google.firebase:firebase-bom:31.0.3"))

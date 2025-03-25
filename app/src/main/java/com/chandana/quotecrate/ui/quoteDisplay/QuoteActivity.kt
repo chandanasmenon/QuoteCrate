@@ -9,24 +9,23 @@ import android.view.View
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
-import com.chandana.quotecrate.QuoteCrateApplication
 import com.chandana.quotecrate.R
 import com.chandana.quotecrate.databinding.ActivityQuoteBinding
 import com.chandana.quotecrate.databinding.LogoutDialogBinding
-import com.chandana.quotecrate.di.component.DaggerActivityComponent
-import com.chandana.quotecrate.di.module.ActivityModule
 import com.chandana.quotecrate.ui.base.UiState
 import com.chandana.quotecrate.ui.login.LoginActivity
 import com.chandana.quotecrate.utils.extensions.displayMessage
 import com.google.firebase.auth.FirebaseAuth
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
-import javax.inject.Inject
 
+@AndroidEntryPoint
 class QuoteActivity : AppCompatActivity() {
-    @Inject
-    lateinit var quoteViewModel: QuoteViewModel
+
+    private lateinit var quoteViewModel: QuoteViewModel
     private lateinit var auth: FirebaseAuth
     private lateinit var binding: ActivityQuoteBinding
     private lateinit var sharedPref: SharedPreferences
@@ -35,7 +34,7 @@ class QuoteActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityQuoteBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        injectDependencies()
+        quoteViewModel = ViewModelProvider(this)[QuoteViewModel::class.java]
         auth = FirebaseAuth.getInstance()
         sharedPref = getSharedPreferences(getString(R.string.userinfo_text), MODE_PRIVATE)
         val user = sharedPref.getString(getString(R.string.email), "")
@@ -129,10 +128,4 @@ class QuoteActivity : AppCompatActivity() {
         dialog.show()
     }
 
-    private fun injectDependencies() {
-        DaggerActivityComponent.builder()
-            .applicationComponent((application as QuoteCrateApplication).applicationComponent)
-            .activityModule(ActivityModule(this)).build().inject(this)
-
-    }
 }
