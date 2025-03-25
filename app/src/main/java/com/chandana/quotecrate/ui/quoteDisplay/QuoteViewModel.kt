@@ -25,7 +25,7 @@ class QuoteViewModel @Inject constructor(
             repository.getRandomQuote()
                 .flowOn(dispatcherProvider.io)
                 .catch { e ->
-                    _uiState.value = UiState.Error(e.toString())
+                    _uiState.value = UiState.Error(e.message ?: "Unable to get the quote!")
                 }
                 .collect {
                     _uiState.value = UiState.Success(it)

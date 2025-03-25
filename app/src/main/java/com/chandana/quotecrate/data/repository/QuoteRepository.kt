@@ -13,6 +13,8 @@ class QuoteRepository @Inject constructor(private val networkService: NetworkSer
     fun getRandomQuote(): Flow<QuoteDataItem> {
         return flow {
             emit(networkService.getRandomQuote())
-        }.map { it[0] }
+        }.map { response ->
+            response[0]
+        }
     }
 }
